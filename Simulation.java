@@ -4,35 +4,46 @@ public class Simulation{
     private static final boolean LOG = true;
     // private ArrayList<Agent> listeAgent;
     private int nbPieces;
-    private int nbProvision;
+    private int nbPoisson;
     private int nbBM;
     private int nbBP;
     private Port portDepart;
-    private Port portArrive;
     private Agent[][] m;
     private Terrain t;
 
-    public Simulation(Terrain t, int nbPieces, int nbProvision, int nbBM, int nbBP){
+    public Simulation(Terrain t, int nbPieces, int nbPoisson, int nbBM, int nbBP){
         m = new Agent[t.nbLignes][t.nbColonnes];
         this.t = t;
         this.nbPieces = nbPieces;
-        this.nbProvision = nbProvision;
+        this.nbPoisson = nbPoisson;
         this.nbBM = nbBM;
         this.nbBP = nbBP;
     }
 
     public void initSimulation(){
-        setCase(new Port((int) (Math.random() * (t.nbLignes - 1 + 1) + 1), 1, t));
+        int xPortDepart = (int) (Math.random() * (t.nbLignes - 1 + 1) + 1) ;
+        portDepart = new Port(xPortDepart, 1, t);
+        setCase(portDepart);
         setCase(new Port((int) (Math.random() * (t.nbLignes - 1 + 1) + 1), t.nbColonnes, t));
-        setCase(new BateauMarchand(1, 1, t));
-        setCase(1, 1, (Object)new Ressource("piece", 4));
+        for (int i = 0; i < nbPieces; i++){
+            setCase((int)(Math.random() * (t.nbLignes) + 1), (int)(Math.random() * (t.nbLignes) + 1), new Piece("Piece", 5));
+        }
+        setCase(new BateauMarchand(xPortDepart, 1, t));
     }
 
+    public void initRessource(){
+
+    }
 
     public boolean setCase(int x, int y, Object o){
         if (o instanceof Agent){
             if (LOG == true)
                 System.out.println("Erreur: impossible de placer un agent avec cette fonction, veuilez utiliser setCase(o)");
+            return false;
+        }
+        if (m[x - 1][y - 1] != null && m[x - 1][y - 1] instanceof Port){
+            if (LOG == true)
+                System.out.println("Erreur impossible d'ajouter une ressource sur un Port");
             return false;
         }
         return t.setCase(x, y, (Ressource)o);
@@ -78,7 +89,6 @@ public class Simulation{
     }
 
     public void prochainTour(){
-
     }
 
     // public boolean setCase(int x, int y, Agent a){

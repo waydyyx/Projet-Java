@@ -52,7 +52,7 @@ public class Port extends Agent{
         return String.format("Port[id: %d nom: %s position: (%d, %d) nbBateau: %d]", id, nom, x, y, nbBateau);
     }
 
-    public ArrayList<BateauMarchand> getBateauMarchand(){
+    public ArrayList<BateauMarchand> getBateauMarchands(){
         return (listeBM);
     }
 
