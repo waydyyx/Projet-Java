@@ -23,4 +23,41 @@ public class BateauMarchand extends Bateau{
         return ("BateauMarchand" + super.toString() + String.format("[PortDest: %s]", pDest.getNom()));
     }
 
+    public void deplaceVersPort(){
+        int DistX = x - pDest.getX();
+        int DistY = y - pDest.getY();
+        if (DistY == 0){
+            if (DistX > 0){
+                this.deplacer(this.x-1,this.y);
+            }
+            else{
+                this.deplacer(this.x+1,this.y);
+            }
+        }
+        if (DistX == 0){
+            if (DistY > 0){
+                this.deplacer(this.x,this.y-1);
+            }
+            else{
+                this.deplacer(this.x,this.y+1);
+            }
+        }
+        if (Math.random()<0.5){
+            if (DistX > 0){
+                this.deplacer(this.x-1,this.y);
+            }
+            else{
+                this.deplacer(this.x+1,this.y);
+            }
+        }
+        else{
+            if (DistX > 0){
+                this.deplacer(this.x-1,this.y);
+            }
+            else{
+                this.deplacer(this.x+1,this.y);
+            }
+        }
+    }
+
 }
