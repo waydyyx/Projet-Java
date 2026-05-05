@@ -45,6 +45,7 @@ public class Port extends Agent{
         b.setPDest(pDest);
         if (LOG == true);
             System.out.println("Depart de " + b);
+        // b.deplaceVersPort();
         return b;
     }
 
@@ -60,5 +61,9 @@ public class Port extends Agent{
         for (int i = 0; i < nbBateau; i++){
             System.out.println(listeBM.get(i));
         }
+    }
+
+    public void action(){
+
     }
 }

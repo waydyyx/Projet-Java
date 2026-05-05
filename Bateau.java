@@ -8,7 +8,7 @@ public abstract class Bateau extends Agent{
     }
 
     protected void deplacer(int x, int y){
-        if (x - 1 < 0 || x - 1 >= t.nbLignes || y - 1 < 0 || y - 1  < t.nbColonnes)
+        if ((x - 1) < 0 || (x - 1) >= t.nbLignes || (y - 1) < 0 || (y - 1)  >= t.nbColonnes)
             return ;
         this.x = x;
         this.y = y;
@@ -17,4 +17,5 @@ public abstract class Bateau extends Agent{
     public String toString(){
         return (String.format("[id: %d nom: %s position(%d, %d)]", id, nom, x, y));
     }
+
 }

@@ -2,12 +2,13 @@ import java.util.ArrayList;
 
 public class Simulation{
     private static final boolean LOG = true;
-    // private ArrayList<Agent> listeAgent;
+    private ArrayList<Agent> listeAgent;
     private int nbPieces;
     private int nbPoisson;
     private int nbBM;
     private int nbBP;
     private Port portDepart;
+    private Port portArrive;
     private Agent[][] m;
     private Terrain t;
 
@@ -18,17 +19,19 @@ public class Simulation{
         this.nbPoisson = nbPoisson;
         this.nbBM = nbBM;
         this.nbBP = nbBP;
+        listeAgent = new ArrayList<Agent>();
     }
 
     public void initSimulation(){
         int xPortDepart = (int) (Math.random() * (t.nbLignes - 1 + 1) + 1) ;
         portDepart = new Port(xPortDepart, 1, t);
+        portArrive = new Port((int) (Math.random() * (t.nbLignes - 1 + 1) + 1), t.nbColonnes, t);
         setCase(portDepart);
-        setCase(new Port((int) (Math.random() * (t.nbLignes - 1 + 1) + 1), t.nbColonnes, t));
+        setCase(portArrive);
         for (int i = 0; i < nbPieces; i++){
             setCase((int)(Math.random() * (t.nbLignes) + 1), (int)(Math.random() * (t.nbLignes) + 1), new Piece("Piece", 5));
         }
-        setCase(new BateauMarchand(xPortDepart, 1, t));
+        portDepart.arriveBateau(new BateauMarchand(xPortDepart, 1, t));
     }
 
     public void initRessource(){
@@ -89,6 +92,14 @@ public class Simulation{
     }
 
     public void prochainTour(){
+        Bateau b = portDepart.departBateau(portArrive);
+        if (b != null)
+            listeAgent.add(b);
+        for (int i = 0; i < listeAgent.size(); i++){
+            listeAgent.get(i).action();
+            if (!(m[listeAgent.get(i).getX() - 1][listeAgent.get(i).getY() - 1] instanceof Port))
+                m[listeAgent.get(i).getX() - 1][listeAgent.get(i).getY() - 1] = listeAgent.get(i);
+        }
     }
 
     // public boolean setCase(int x, int y, Agent a){
@@ -145,6 +156,10 @@ public class Simulation{
     public void afficheRessource(int n){
         t.afficher(n);
     }
+
+    // public void afficheStatistique(){
+    //     for (int i = 0; i < ge)
+    // }
 
 
     

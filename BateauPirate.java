@@ -15,4 +15,8 @@ public class BateauPirate extends Bateau{
     public String getNom(){
         return (nom);
     }
+
+    public void action(){
+        
+    }
 }

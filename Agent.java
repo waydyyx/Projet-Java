@@ -35,4 +35,6 @@ public abstract class Agent{
     public String getNom(){
         return (nom);
     }
+
+    public abstract void action();
 }

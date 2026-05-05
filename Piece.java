@@ -10,4 +10,16 @@ public class Piece extends Ressource{
         this(nom, quantite, (int)(Math.random() * 5) + 1);
     }
 
+    public Piece(String nom){
+        this(nom, (int)(Math.random() * 5) + 1, (int)(Math.random() * 5) + 1);
+    }
+
+    public Piece(){
+        this("Piece");
+    }
+
+    public int getSommePiece(){
+        return rarete * super.getQuantite();
+    }
+
 }
