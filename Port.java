@@ -6,8 +6,8 @@ public class Port extends Agent{
     private ArrayList<BateauMarchand> listeBM;
     private int nbBateau;
 
-    public Port(String nom, int x, int y, Terrain t){
-        super(nom, x, y, t);
+    public Port(String nom, int x, int y, Terrain t, Agent[][] m){
+        super(nom, x, y, t, m);
         listeBM = new ArrayList<BateauMarchand>();
         nbBateau = 0;
         id = ++cpt;
@@ -16,8 +16,8 @@ public class Port extends Agent{
 
     }
 
-    public Port(int x, int y, Terrain t){
-        this("Port" + (cpt+1), x, y, t);
+    public Port(int x, int y, Terrain t, Agent[][] m){
+        this("Port" + (cpt+1), x, y, t, m);
     }
 
     public void setPosition(int x, int y){

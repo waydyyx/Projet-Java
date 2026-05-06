@@ -4,10 +4,12 @@ public abstract class Agent{
     protected int x;
     protected int y;
     protected Terrain t;
+    protected Agent[][] m;
 
-    protected Agent(String nom, int x, int y, Terrain t){
+    protected Agent(String nom, int x, int y, Terrain t, Agent[][] m){
         this.nom = nom;
         this.t = t;
+        this.m=m;
 
         if (x - 1 < 0)
             this.x = 1;

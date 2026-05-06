@@ -17,7 +17,6 @@ public class Simulation{
         this.t = t;
         this.nbCourant = nbCourant;
         this.nbPoisson = nbPoisson;
-        this.nbPoisson = nbPoisson;
         this.nbBM = nbBM;
         this.nbBP = nbBP;
         listeAgent = new ArrayList<Agent>();
@@ -29,7 +28,9 @@ public class Simulation{
         String[] nomCour={"^",">","v","<"};
         while (i < nbCourant){
             int dir=(int)(Math.random()*4);
-            if (setCase((int)(Math.random() * (t.nbLignes) + 1), (int)(Math.random() * (t.nbLignes) + 1), new Courant(nomCour[dir],dir)))
+            if (setCase((int)(Math.random() * (t.nbLignes) + 1), (int)(Math.random() * (t.nbLignes) + 1), new Courant(nomCour[dir],dir))){
+                i++;
+            }
         }
         while (i < nbPoisson){
             if (setCase((int)(Math.random() * (t.nbLignes) + 1), (int)(Math.random() * (t.nbLignes) + 1), new Poisson("Poisson")))
@@ -39,12 +40,14 @@ public class Simulation{
 
     private void initAgent(){
         int xPortDepart = (int) (Math.random() * (t.nbLignes - 1 + 1) + 1) ;
-        portDepart = new Port(xPortDepart, 1, t);
-        portArrive = new Port((int) (Math.random() * (t.nbLignes - 1 + 1) + 1), t.nbColonnes, t);
+        portDepart = new Port(xPortDepart, 1, t, m);
+        portArrive = new Port((int) (Math.random() * (t.nbLignes - 1 + 1) + 1), t.nbColonnes, t, m);
         setCase(portDepart);
         setCase(portArrive);
-        portDepart.arriveBateau(new BateauMarchand(xPortDepart, 1, t));
-        portDepart.arriveBateau(new BateauMarchand("caca", xPortDepart, 1, t));
+        portDepart.arriveBateau(new BateauMarchand(xPortDepart, 1, t, m));
+        portDepart.arriveBateau(new BateauMarchand("caca", xPortDepart, 1, t, m));
+        BateauPirate p=new BateauPirate(xPortDepart,5,t,m);
+        listeAgent.add(p);
     }
 
     public void initSimulation(){
@@ -120,6 +123,11 @@ public class Simulation{
                 m[listeAgent.get(i).getX() - 1][listeAgent.get(i).getY() - 1] = listeAgent.get(i);
                 if (!(m[x][y] instanceof Port))
                     m[x][y] = null;
+            }
+            if (m[listeAgent.get(i).getX() - 1][listeAgent.get(i).getY() - 1] instanceof BateauMarchand){
+                if (((BateauMarchand)listeAgent.get(i)).getCoule()){
+                    m[listeAgent.get(i).getX() - 1][listeAgent.get(i).getY() - 1]=null;
+                }
             }
         }
         

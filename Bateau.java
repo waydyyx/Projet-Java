@@ -6,8 +6,8 @@ public abstract class Bateau extends Agent{
     protected int id;
     
 
-    protected Bateau(String nom, int x, int y, Terrain t){
-        super(nom, x, y, t);
+    protected Bateau(String nom, int x, int y, Terrain t, Agent[][] m){
+        super(nom, x, y, t, m);
         id = ++cpt;
     }
 
