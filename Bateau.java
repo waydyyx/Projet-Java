@@ -14,6 +14,25 @@ public abstract class Bateau extends Agent{
     protected void deplacer(int x, int y){
         if ((x - 1) < 0 || (x - 1) >= t.nbLignes || (y - 1) < 0 || (y - 1)  >= t.nbColonnes)
             return ;
+        Ressource c=t.getCase(x,y);
+        if (c instanceof Courant){
+            if (((Courant) c).getDir()=='H'){
+                this.deplacer(x-1,y);
+                return;
+            }
+            if (((Courant)c).getDir()=='D'){
+                this.deplacer(x,y+1);
+                return;
+            }
+            if (((Courant)c).getDir()=='B'){
+                this.deplacer(x+1,y);
+                return;
+            }
+            if (((Courant)c).getDir()=='G'){
+                this.deplacer(x,y-1);
+                return;
+            }
+        }
         this.x = x;
         this.y = y;
     }

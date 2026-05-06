@@ -15,6 +15,7 @@ public class Simulation{
     public Simulation(Terrain t, int nbCourant, int nbPoisson, int nbBM, int nbBP){
         m = new Agent[t.nbLignes][t.nbColonnes];
         this.t = t;
+        this.nbCourant = nbCourant;
         this.nbPoisson = nbPoisson;
         this.nbPoisson = nbPoisson;
         this.nbBM = nbBM;
@@ -25,6 +26,11 @@ public class Simulation{
 
     private void initRessource(){
         int i = 0;
+        String[] nomCour={"^",">","v","<"};
+        while (i < nbCourant){
+            int dir=(int)(Math.random()*4);
+            if (setCase((int)(Math.random() * (t.nbLignes) + 1), (int)(Math.random() * (t.nbLignes) + 1), new Courant(nomCour[dir],dir)))
+        }
         while (i < nbPoisson){
             if (setCase((int)(Math.random() * (t.nbLignes) + 1), (int)(Math.random() * (t.nbLignes) + 1), new Poisson("Poisson")))
                 i++;
@@ -169,7 +175,5 @@ public class Simulation{
     // public void afficheStatistique(){
     //     for (int i = 0; i < ge)
     // }
-
-
-    
+   
 }
