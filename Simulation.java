@@ -172,9 +172,9 @@ public class Simulation{
         for (int i = 0; i < t.lesRessources().size(); i++){
             if (t.lesRessources().get(i) instanceof Poisson){
                 Poisson p = (Poisson)t.lesRessources().get(i);
-                System.out.println(String.format("Quantite poisson avant: %d", p.getNbPoisson()));
+                // System.out.println(String.format("Quantite poisson avant: %d", p.getNbPoisson()));
                 p.evoluer();
-                System.out.println(String.format("Quantite poisson apres: %d", p.getNbPoisson()));
+                // System.out.println(String.format("Quantite poisson apres: %d", p.getNbPoisson()));
             }
         }
     }
