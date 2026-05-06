@@ -1,4 +1,4 @@
-public class Poisson extends Ressource{
+public class Poisson extends Ressource implements Toxic{
 
     public Poisson (String nom, int quantite){
         super(nom, quantite);
