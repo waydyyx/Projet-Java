@@ -4,6 +4,8 @@ public class TestSimulation{
         int nbColonnes = 10;
         int nbPoisson = 20;
         int nbCourant = 5;
+        int nbBateauMarchand = 2;
+        int nbBateauPirate = 2;
         if (nbPoisson > Config.POISSON_MAX)
             nbPoisson = Config.POISSON_MAX;
         else if (nbPoisson < Config.POISSON_MIN)
@@ -13,8 +15,9 @@ public class TestSimulation{
         else if (nbCourant < Config.COURANT_MIN)
             nbCourant = Config.COURANT_MIN;
 
-        Config.validerTerrain(nbLignes, nbColonnes);
-        Simulation s = Simulation.getInstance(new Terrain(10, 10), 5, 20, 2, 2);
+        Simulation s = Simulation.getInstance(nbLignes, nbColonnes, nbCourant, nbPoisson, nbBateauMarchand, nbBateauPirate);
+        if (s == null)
+            return ;
         s.initSimulation();
         for (int i = 0; i < 20; i++){
             s.prochainTour();          

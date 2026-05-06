@@ -13,7 +13,8 @@ public class Simulation{
     private Terrain t;
     private static Simulation instance;
 
-    private Simulation(Terrain t, int nbCourant, int nbPoisson, int nbBM, int nbBP){
+    private Simulation(int nbLignes, int nbColonnes, int nbCourant, int nbPoisson, int nbBM, int nbBP){
+        t = new Terrain(nbLignes, nbColonnes);
         m = new Agent[t.nbLignes][t.nbColonnes];
         this.t = t;
         this.nbCourant = nbCourant;
@@ -23,9 +24,16 @@ public class Simulation{
         listeAgent = new ArrayList<Agent>();
     }
 
-    public static Simulation getInstance(Terrain t, int nbCourant, int nbPoisson, int nbBM, int nbBP){
+    public static Simulation getInstance(int nbLignes, int nbColonnes, int nbCourant, int nbPoisson, int nbBM, int nbBP){
+        try {
+            Config.validerTerrain(nbLignes, nbColonnes);
+        } 
+        catch (SimulationException e) {
+            System.err.println("Erreur : " + e.getMessage());
+            return null;
+        }
         if (instance == null){
-            instance = new Simulation(t, nbCourant, nbPoisson, nbBM, nbBP);
+            instance = new Simulation(nbLignes, nbColonnes, nbCourant, nbPoisson, nbBM, nbBP);
         }
         return instance;
     }
@@ -53,11 +61,14 @@ public class Simulation{
         portArrive = new Port(xPortArrive, t.nbColonnes, t, m);
         setCase(portDepart);
         setCase(portArrive);
-        portDepart.arriveBateau(new BateauMarchand(xPortDepart, 1, t, m));
-        portDepart.arriveBateau(new BateauMarchand("BM2", xPortDepart, 1, t, m));
-        BateauPirate p = new BateauPirate(xPortArrive, 5, t,m);
-        setCase(p);
-        listeAgent.add(p);
+        for (int i = 0; i < nbBM; i++){
+            portDepart.arriveBateau(new BateauMarchand(xPortDepart, 1, t, m));
+        }
+        for (int i = 0; i < nbBP; i++){
+            BateauPirate p = new BateauPirate(xPortArrive, (int) (Math.random() * (t.nbColonnes - 1) + 1), t,m);
+            setCase(p);
+            listeAgent.add(p);
+        }
     }
 
     public void initSimulation(){
