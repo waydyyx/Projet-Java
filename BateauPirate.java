@@ -41,10 +41,9 @@ public class BateauPirate extends Bateau{
     }
 
 
-    private void coulerSiMarchand(int ligne, int col) {
-        if (ligne >= 0 && ligne < m.length && col >= 0 && col < m[0].length
-                && m[ligne][col] instanceof BateauMarchand)
-            ((BateauMarchand) m[ligne][col]).couler();
+    private void coulerSiMarchand(int x, int y) {
+        if (x >= 0 && x < m.length && y >= 0 && y < m[0].length && m[x][y] instanceof BateauMarchand)
+            ((BateauMarchand) m[x][y]).couler(); // pas x - 1 et y - 1 car en appelant la fonction il ya deja les decalages
     }
 
     public void attaquer() {

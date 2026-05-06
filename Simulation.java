@@ -47,7 +47,7 @@ public class Simulation{
         setCase(portArrive);
         portDepart.arriveBateau(new BateauMarchand(xPortDepart, 1, t, m));
         portDepart.arriveBateau(new BateauMarchand("caca", xPortDepart, 1, t, m));
-        BateauPirate p = new BateauPirate(xPortArrive, 5, t, m);
+        BateauPirate p = new BateauPirate(xPortArrive, 5, t,m);
         setCase(p);
         listeAgent.add(p);
     }
@@ -110,7 +110,7 @@ public class Simulation{
         return nbCaseVide;
     }
 
-    public void prochainTour(){
+    private void updateAgent(){
         Bateau b; 
         if (Math.random() < 1.0/3)
             b = portDepart.departBateau(portArrive);
@@ -123,16 +123,26 @@ public class Simulation{
             listeAgent.get(i).action();
             if (!(m[listeAgent.get(i).getX() - 1][listeAgent.get(i).getY() - 1] instanceof Port)){
                 m[listeAgent.get(i).getX() - 1][listeAgent.get(i).getY() - 1] = listeAgent.get(i);
-                if (!(m[x][y] instanceof Port))
+                if (!(m[x][y] instanceof Port) && (x != listeAgent.get(i).getX() - 1 || y != listeAgent.get(i).getY() - 1))
                     m[x][y] = null;
             }
+
+            if (listeAgent.get(i) instanceof BateauMarchand && m[listeAgent.get(i).getX() - 1][listeAgent.get(i).getY() - 1] == portArrive) {
+                portArrive.arriveBateau((BateauMarchand) listeAgent.get(i));
+                m[listeAgent.get(i).getX() - 1][listeAgent.get(i).getY() - 1] = portArrive;
+                listeAgent.remove(i);
+                i--;
+        }
+
             if (m[listeAgent.get(i).getX() - 1][listeAgent.get(i).getY() - 1] instanceof BateauMarchand){
                 if (((BateauMarchand)listeAgent.get(i)).getCoule()){
                     m[listeAgent.get(i).getX() - 1][listeAgent.get(i).getY() - 1]=null;
                 }
             }
         }
-        
+    }
+
+    private void updateRessource(){
         for (int i = 0; i < t.lesRessources().size(); i++){
             if (t.lesRessources().get(i) instanceof Poisson){
                 Poisson p = (Poisson)t.lesRessources().get(i);
@@ -141,6 +151,11 @@ public class Simulation{
                 System.out.println(String.format("Quantite poisson apres: %d", p.getNbPoisson()));
             }
         }
+    }
+
+    public void prochainTour(){
+        updateAgent();
+        updateRessource();
     }
 
     private void afficheLigne(int nbColones, int nbTiret){
