@@ -39,14 +39,16 @@ public class Simulation{
     }
 
     private void initAgent(){
-        int xPortDepart = (int) (Math.random() * (t.nbLignes - 1 + 1) + 1) ;
+        int xPortDepart = (int) (Math.random() * (t.nbLignes - 1 + 1) + 1);
+        int xPortArrive = (int) (Math.random() * (t.nbLignes - 1 + 1) + 1);
         portDepart = new Port(xPortDepart, 1, t, m);
-        portArrive = new Port((int) (Math.random() * (t.nbLignes - 1 + 1) + 1), t.nbColonnes, t, m);
+        portArrive = new Port(xPortArrive, t.nbColonnes, t, m);
         setCase(portDepart);
         setCase(portArrive);
         portDepart.arriveBateau(new BateauMarchand(xPortDepart, 1, t, m));
         portDepart.arriveBateau(new BateauMarchand("caca", xPortDepart, 1, t, m));
-        BateauPirate p=new BateauPirate(xPortDepart,5,t,m);
+        BateauPirate p = new BateauPirate(xPortArrive, 5, t, m);
+        setCase(p);
         listeAgent.add(p);
     }
 

@@ -40,20 +40,18 @@ public class BateauPirate extends Bateau{
         return ("BateauPirate" + super.toString());
     }
 
-    public void attaquer (){
-        if (m[x - 1][y - 1] instanceof BateauMarchand)
-            ((BateauMarchand)m[x - 1][y - 1]).couler();
 
-        if(x < m.length  && x >= 0 && m[x][y - 1] instanceof BateauMarchand)
-            ((BateauMarchand)m[x][y - 1]).couler();
+    private void coulerSiMarchand(int ligne, int col) {
+        if (ligne >= 0 && ligne < m.length && col >= 0 && col < m[0].length
+                && m[ligne][col] instanceof BateauMarchand)
+            ((BateauMarchand) m[ligne][col]).couler();
+    }
 
-        if(x < m.length  && x >= 0 && m[x - 2][y - 1] instanceof BateauMarchand)
-            ((BateauMarchand)m[x - 2][y - 1]).couler();
-
-        if(y < m[x].length  && y >= 0 && m[x - 1][y] instanceof BateauMarchand)
-            ((BateauMarchand)m[x - 1][y]).couler();
-
-        if(y < m[x].length  && y >= 0 && m[x - 1][y - 2] instanceof BateauMarchand)
-            ((BateauMarchand)m[x - 1][y - 2]).couler();
+    public void attaquer() {
+        coulerSiMarchand(x - 1, y - 1); // case propre du pirate
+        coulerSiMarchand(x,     y - 1); // bas
+        coulerSiMarchand(x - 2, y - 1); // haut
+        coulerSiMarchand(x - 1, y);     // droite
+        coulerSiMarchand(x - 1, y - 2); // gauche
     }
 }
