@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Simulation{
     private static final boolean LOG = true;
     private ArrayList<Agent> listeAgent;
-    private int nbPieces;
+    private int nbCourant;
     private int nbPoisson;
     private int nbBM;
     private int nbBP;
@@ -12,10 +12,10 @@ public class Simulation{
     private Agent[][] m;
     private Terrain t;
 
-    public Simulation(Terrain t, int nbPieces, int nbPoisson, int nbBM, int nbBP){
+    public Simulation(Terrain t, int nbCourant, int nbPoisson, int nbBM, int nbBP){
         m = new Agent[t.nbLignes][t.nbColonnes];
         this.t = t;
-        this.nbPieces = nbPieces;
+        this.nbPoisson = nbPoisson;
         this.nbPoisson = nbPoisson;
         this.nbBM = nbBM;
         this.nbBP = nbBP;
@@ -25,8 +25,8 @@ public class Simulation{
 
     private void initRessource(){
         int i = 0;
-        while (i < nbPieces){
-            if (setCase((int)(Math.random() * (t.nbLignes) + 1), (int)(Math.random() * (t.nbLignes) + 1), new Piece("Piece", 5)))
+        while (i < nbPoisson){
+            if (setCase((int)(Math.random() * (t.nbLignes) + 1), (int)(Math.random() * (t.nbLignes) + 1), new Poisson("Poisson")))
                 i++;
         }
     }
@@ -38,6 +38,7 @@ public class Simulation{
         setCase(portDepart);
         setCase(portArrive);
         portDepart.arriveBateau(new BateauMarchand(xPortDepart, 1, t));
+        portDepart.arriveBateau(new BateauMarchand("caca", xPortDepart, 1, t));
     }
 
     public void initSimulation(){
@@ -113,6 +114,15 @@ public class Simulation{
                 m[listeAgent.get(i).getX() - 1][listeAgent.get(i).getY() - 1] = listeAgent.get(i);
                 if (!(m[x][y] instanceof Port))
                     m[x][y] = null;
+            }
+        }
+        
+        for (int i = 0; i < t.lesRessources().size(); i++){
+            if (t.lesRessources().get(i) instanceof Poisson){
+                Poisson p = (Poisson)t.lesRessources().get(i);
+                System.out.println(String.format("Quantite poisson avant: %d", p.getNbPoisson()));
+                p.evoluer();
+                System.out.println(String.format("Quantite poisson apres: %d", p.getNbPoisson()));
             }
         }
     }

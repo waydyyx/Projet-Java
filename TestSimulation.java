@@ -1,6 +1,6 @@
 public class TestSimulation{
     public static void main(String args[]) {
-        Simulation s = new Simulation(new Terrain(10, 10), 25, 2, 2, 2);
+        Simulation s = new Simulation(new Terrain(10, 10), 2, 25, 2, 2);
         s.initSimulation();
         for (int i = 0; i < 8; i++){
             s.prochainTour();          

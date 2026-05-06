@@ -2,25 +2,24 @@ import java.util.ArrayList;
 
 public class BateauMarchand extends Bateau{
     private Port pDest;
+    private int nbPoisson;
 
 
     public BateauMarchand(String nom, int x, int y, Terrain t, Port pDest){
         super(nom, x, y, t);
         this.pDest = pDest;
+        this.nbPoisson = 0;
+        
         // System.out.println(nom);
     }
 
+    public BateauMarchand(String nom, int x, int y, Terrain t){
+        this(nom, x, y, t, null);
+    }
     public BateauMarchand(int x, int y, Terrain t){
         this("BM" + (cpt+1), x, y, t, null);
     }
 
-    public int getValeurPiece(){
-        int somme = nbPiece;
-        for (int i = 0; i < tabPiece.size(); i++){
-            somme += tabPiece.get(i).getValeurPiece();
-        }
-        return somme;
-    }
 
     public void setPDest(Port pDest){
         this.pDest = pDest;
@@ -30,8 +29,6 @@ public class BateauMarchand extends Bateau{
         int DistX = x - pDest.getX();
         int DistY = y - pDest.getY();
 
-        System.out.println(String.format("pDest x : %d, y: %d", pDest.getX(), pDest.getY()));
-        System.out.println(String.format("x : %d, y: %d", x, y));
         if (DistX == 0 && DistY == 0)
         {
             if (LOG == true)
@@ -66,9 +63,25 @@ public class BateauMarchand extends Bateau{
         }
     }
 
+    private void pecher(){
+        Poisson p = (Poisson)t.getCase(x,y);
+        int nbPoissonPeche = (int)(Math.random() * p.getNbPoisson());
+        nbPoisson += nbPoissonPeche;
+        p.poissonPecher(nbPoissonPeche);
+        if (p.getNbPoisson() == 0)
+            t.viderCase(x, y);
+        if (LOG == true)
+            System.out.println(this + String.format(" a peche %d poisson sur %d poisson", nbPoissonPeche, p.getNbPoisson() + nbPoissonPeche));
+    }
+    public void agirCase(){
+        if (t.getCase(x, y) instanceof Poisson){
+            pecher();
+        }
+    }
+
     public void action(){
         deplaceVersPort();
-        getItem();
+        agirCase();
     }
 
     public String toString(){

@@ -31,7 +31,6 @@ public class BateauPirate extends Bateau{
         }
     }
 
-
     public void action(){   
         deplace_rand();
     }
