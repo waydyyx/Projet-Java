@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Simulation{
-    private static final boolean LOG = true;
+    private static final boolean LOG = false;
     private ArrayList<Agent> listeAgent;
     private int nbCourant;
     private int nbPoisson;

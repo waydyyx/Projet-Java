@@ -1,5 +1,5 @@
 public abstract class Agent{
-    protected static final boolean LOG = true;
+    protected static final boolean LOG = false;
     protected String nom;
     protected int x;
     protected int y;
