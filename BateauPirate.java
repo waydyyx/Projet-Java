@@ -5,11 +5,7 @@ public class BateauPirate extends Bateau{
     }
 
     public BateauPirate(int x, int y, Terrain t){
-        this("BP"+(cpt+1), x, y, t);
-    }
-
-    public String toString(){
-        return ("BateauPirate" + super.toString());
+        this("BP" + (cpt+1), x, y, t);
     }
 
     public String getNom(){
@@ -35,7 +31,12 @@ public class BateauPirate extends Bateau{
         }
     }
 
-    public void action(){
-        
+
+    public void action(){   
+        deplace_rand();
+    }
+
+    public String toString(){
+        return ("BateauPirate" + super.toString());
     }
 }

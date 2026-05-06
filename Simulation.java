@@ -22,20 +22,27 @@ public class Simulation{
         listeAgent = new ArrayList<Agent>();
     }
 
-    public void initSimulation(){
+
+    private void initRessource(){
+        int i = 0;
+        while (i < nbPieces){
+            if (setCase((int)(Math.random() * (t.nbLignes) + 1), (int)(Math.random() * (t.nbLignes) + 1), new Piece("Piece", 5)))
+                i++;
+        }
+    }
+
+    private void initAgent(){
         int xPortDepart = (int) (Math.random() * (t.nbLignes - 1 + 1) + 1) ;
         portDepart = new Port(xPortDepart, 1, t);
         portArrive = new Port((int) (Math.random() * (t.nbLignes - 1 + 1) + 1), t.nbColonnes, t);
         setCase(portDepart);
         setCase(portArrive);
-        for (int i = 0; i < nbPieces; i++){
-            setCase((int)(Math.random() * (t.nbLignes) + 1), (int)(Math.random() * (t.nbLignes) + 1), new Piece("Piece", 5));
-        }
         portDepart.arriveBateau(new BateauMarchand(xPortDepart, 1, t));
     }
 
-    public void initRessource(){
-
+    public void initSimulation(){
+        initRessource();
+        initAgent();
     }
 
     public boolean setCase(int x, int y, Object o){
@@ -92,31 +99,23 @@ public class Simulation{
     }
 
     public void prochainTour(){
-        Bateau b = portDepart.departBateau(portArrive);
+        Bateau b; 
+        if (Math.random() < 1.0/3)
+            b = portDepart.departBateau(portArrive);
+        else
+            b = null;
         if (b != null)
             listeAgent.add(b);
         for (int i = 0; i < listeAgent.size(); i++){
+            int x = listeAgent.get(i).getX() - 1; int y = listeAgent.get(i).getY() - 1; // Ancienne position de l'agent;
             listeAgent.get(i).action();
-            if (!(m[listeAgent.get(i).getX() - 1][listeAgent.get(i).getY() - 1] instanceof Port))
+            if (!(m[listeAgent.get(i).getX() - 1][listeAgent.get(i).getY() - 1] instanceof Port)){
                 m[listeAgent.get(i).getX() - 1][listeAgent.get(i).getY() - 1] = listeAgent.get(i);
+                if (!(m[x][y] instanceof Port))
+                    m[x][y] = null;
+            }
         }
     }
-
-    // public boolean setCase(int x, int y, Agent a){
-    //     if (x - 1 < 0 || x - 1 >= t.nbLignes || y - 1 < 0 || y - 1 >= t.nbColonnes)
-    //     {
-    //         System.out.println("Erreur de coordoonnes");
-    //         return false;
-    //     }
-    //     if (m[x - 1][y - 1] != null)
-    //     {
-    //         System.out.println(String.format("La case (%d, %d) est occupe", x, y));
-    //         return false;
-    //     }
-    //     m[x - 1][y - 1] = a;
-    //     ((Agent)a).setPosition(x - 1, y - 1);
-    //     return true;
-    // }
 
     private void afficheLigne(int nbColones, int nbTiret){
         for (int i = 0; i < nbColones; i++){

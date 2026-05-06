@@ -2,15 +2,11 @@ import java.util.ArrayList;
 
 public class BateauMarchand extends Bateau{
     private Port pDest;
-    private int nbPiece;
-    private ArrayList<Piece> tabPiece;
 
 
     public BateauMarchand(String nom, int x, int y, Terrain t, Port pDest){
         super(nom, x, y, t);
         this.pDest = pDest;
-        this.nbPiece = (int)(Math.random() * 5) + 1;
-        tabPiece = new ArrayList<Piece>();
         // System.out.println(nom);
     }
 
@@ -18,29 +14,16 @@ public class BateauMarchand extends Bateau{
         this("BM" + (cpt+1), x, y, t, null);
     }
 
-    public int getSommePiece(){
+    public int getValeurPiece(){
         int somme = nbPiece;
         for (int i = 0; i < tabPiece.size(); i++){
-            somme += tabPiece.get(i).getSommePiece();
+            somme += tabPiece.get(i).getValeurPiece();
         }
         return somme;
     }
 
     public void setPDest(Port pDest){
         this.pDest = pDest;
-    }
-
-    public void getItem(){
-        if (t.getCase(x, y) instanceof Piece){
-            tabPiece.add((Piece)t.getCase(x,y));
-            t.viderCase(x, y);
-        }
-    }
-
-    public String toString(){
-        if (pDest == null)
-            return ("BateauMarchand" + super.toString() + String.format("[PortDest: %s]", "null"));
-        return ("BateauMarchand" + super.toString() + String.format("[PortDest: %s]", pDest.getNom()));
     }
 
     public void deplaceVersPort(){
@@ -85,8 +68,16 @@ public class BateauMarchand extends Bateau{
 
     public void action(){
         deplaceVersPort();
-        System.out.println(String.format("x : %d, y: %d", x, y));
         getItem();
     }
+
+    public String toString(){
+        if (pDest == null)
+            return ("BateauMarchand" + super.toString() + String.format("[PortDest: %s]", "null"));
+        return ("BateauMarchand" + super.toString() + String.format("[PortDest: %s]", pDest.getNom()));
+    }
+
+
+
 
 }

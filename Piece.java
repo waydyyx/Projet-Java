@@ -18,7 +18,7 @@ public class Piece extends Ressource{
         this("Piece");
     }
 
-    public int getSommePiece(){
+    public int getValeurPiece(){
         return rarete * super.getQuantite();
     }
 
