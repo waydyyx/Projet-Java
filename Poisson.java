@@ -4,7 +4,6 @@ public class Poisson extends Ressource{
         super(nom, quantite);
     }
 
-
     public Poisson(String nom){
         this(nom, (int)(Math.random() * 20) + 5);
     }

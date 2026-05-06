@@ -11,8 +11,9 @@ public class Simulation{
     private Port portArrive;
     private Agent[][] m;
     private Terrain t;
+    private static Simulation instance;
 
-    public Simulation(Terrain t, int nbCourant, int nbPoisson, int nbBM, int nbBP){
+    private Simulation(Terrain t, int nbCourant, int nbPoisson, int nbBM, int nbBP){
         m = new Agent[t.nbLignes][t.nbColonnes];
         this.t = t;
         this.nbCourant = nbCourant;
@@ -20,6 +21,13 @@ public class Simulation{
         this.nbBM = nbBM;
         this.nbBP = nbBP;
         listeAgent = new ArrayList<Agent>();
+    }
+
+    public static Simulation getInstance(Terrain t, int nbCourant, int nbPoisson, int nbBM, int nbBP){
+        if (instance == null){
+            instance = new Simulation(t, nbCourant, nbPoisson, nbBM, nbBP);
+        }
+        return instance;
     }
 
 
