@@ -13,7 +13,7 @@ public class BateauPirate extends Bateau{
     }
 
     public void deplacer(int x, int y){
-        if ((x - 1) < 1 || (x - 1) > t.nbLignes || (y - 1) < 1 || (y - 1)  > t.nbColonnes)
+        if ((x - 1) < 1 || (x - 1) >= t.nbLignes - 1 || (y - 1) < 1 || (y - 1)  >= t.nbColonnes - 1)
             return ;
         Ressource c=t.getCase(x,y);
         if (c instanceof Courant){
