@@ -30,12 +30,8 @@ public class BateauMarchand extends Bateau{
         int DistX = x - pDest.getX();
         int DistY = y - pDest.getY();
 
-        if (DistX == 0 && DistY == 0)
-        {
-            if (LOG == true)
-                System.out.println(this + " est arrive a destination");
-            return;
-        }
+        if (pDest == null)
+            return ;
         if (DistY == 0){
             if (DistX > 0)
                 this.deplacer(this.x-1,this.y);
@@ -93,7 +89,8 @@ public class BateauMarchand extends Bateau{
 
     public void couler(){
         coule=true;
-        System.out.println("bateau coulé");
+        if (LOG)
+            System.out.println("bateau coulé");
     }
 
     public boolean getCoule(){

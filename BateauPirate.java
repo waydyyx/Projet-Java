@@ -41,16 +41,19 @@ public class BateauPirate extends Bateau{
     }
 
     public void attaquer (){
-        if(m[x][y] instanceof BateauMarchand){
-            ((BateauMarchand)m[x][y]).couler();
-        }
-        for (int i=x-1;i<=x+1;i=i+2){
-            if(m[i][y+1] instanceof BateauMarchand){
-                ((BateauMarchand)m[i][y+1]).couler();
-            }
-            if(m[i][y-1] instanceof BateauMarchand){
-                ((BateauMarchand)m[i][y-1]).couler();
-            }
-        }
+        if (m[x - 1][y - 1] instanceof BateauMarchand)
+            ((BateauMarchand)m[x - 1][y - 1]).couler();
+
+        if(x < m.length  && x >= 0 && m[x][y - 1] instanceof BateauMarchand)
+            ((BateauMarchand)m[x][y - 1]).couler();
+
+        if(x < m.length  && x >= 0 && m[x - 2][y - 1] instanceof BateauMarchand)
+            ((BateauMarchand)m[x - 2][y - 1]).couler();
+
+        if(y < m[x].length  && y >= 0 && m[x - 1][y] instanceof BateauMarchand)
+            ((BateauMarchand)m[x - 1][y]).couler();
+
+        if(y < m[x].length  && y >= 0 && m[x - 1][y - 2] instanceof BateauMarchand)
+            ((BateauMarchand)m[x - 1][y - 2]).couler();
     }
 }
