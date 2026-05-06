@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Simulation{
     private static final boolean LOG = true;
     private ArrayList<Agent> listeAgent;
-    private int nbPieces;
+    private int nbCourant;
     private int nbPoisson;
     private int nbBM;
     private int nbBP;
@@ -12,10 +12,10 @@ public class Simulation{
     private Agent[][] m;
     private Terrain t;
 
-    public Simulation(Terrain t, int nbPieces, int nbPoisson, int nbBM, int nbBP){
+    public Simulation(Terrain t, int nbCourant, int nbPoisson, int nbBM, int nbBP){
         m = new Agent[t.nbLignes][t.nbColonnes];
         this.t = t;
-        this.nbPieces = nbPieces;
+        this.nbCourant = nbCourant;
         this.nbPoisson = nbPoisson;
         this.nbBM = nbBM;
         this.nbBP = nbBP;
@@ -25,8 +25,10 @@ public class Simulation{
 
     private void initRessource(){
         int i = 0;
-        while (i < nbPieces){
-            if (setCase((int)(Math.random() * (t.nbLignes) + 1), (int)(Math.random() * (t.nbLignes) + 1), new Piece("Piece", 5)))
+        String[] nomCour={"^",">","v","<"};
+        while (i < nbCourant){
+            int dir=(int)(Math.random()*4);
+            if (setCase((int)(Math.random() * (t.nbLignes) + 1), (int)(Math.random() * (t.nbLignes) + 1), new Courant(nomCour[dir],dir)))
                 i++;
         }
     }
