@@ -47,7 +47,7 @@ public class Port extends Agent{
         }
         BateauMarchand b = listeBM.remove(--nbBateau);
         b.setPDest(pDest);
-        if (LOG);
+        if (LOG)
             System.out.println("Depart de " + b);
         // b.deplaceVersPort();
         return b;
