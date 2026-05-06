@@ -31,6 +31,9 @@ public class BateauMarchand extends Bateau{
             return ;
         int DistX = x - pDest.getX();
         int DistY = y - pDest.getY();
+        
+        if (DistX == 0 && DistY == 0)
+            return;
 
         if (DistY == 0){
             if (DistX > 0)

@@ -111,36 +111,54 @@ public class Simulation{
     }
 
     private void updateAgent(){
-        Bateau b; 
-        if (Math.random() < 1.0/3)
-            b = portDepart.departBateau(portArrive);
-        else
-            b = null;
+    if (Math.random() < 1.0/3) {
+        Bateau b = portDepart.departBateau(portArrive);
         if (b != null)
             listeAgent.add(b);
-        for (int i = 0; i < listeAgent.size(); i++){
-            int x = listeAgent.get(i).getX() - 1; int y = listeAgent.get(i).getY() - 1; // Ancienne position de l'agent;
-            listeAgent.get(i).action();
-            if (!(m[listeAgent.get(i).getX() - 1][listeAgent.get(i).getY() - 1] instanceof Port)){
-                m[listeAgent.get(i).getX() - 1][listeAgent.get(i).getY() - 1] = listeAgent.get(i);
-                if (!(m[x][y] instanceof Port) && (x != listeAgent.get(i).getX() - 1 || y != listeAgent.get(i).getY() - 1))
-                    m[x][y] = null;
-            }
+    }
 
-            if (listeAgent.get(i) instanceof BateauMarchand && m[listeAgent.get(i).getX() - 1][listeAgent.get(i).getY() - 1] == portArrive) {
-                portArrive.arriveBateau((BateauMarchand) listeAgent.get(i));
-                m[listeAgent.get(i).getX() - 1][listeAgent.get(i).getY() - 1] = portArrive;
-                listeAgent.remove(i);
-                i--;
+    for (int i = 0; i < listeAgent.size(); i++){
+        Agent agent = listeAgent.get(i);
+
+        int oldX = agent.getX() - 1;
+        int oldY = agent.getY() - 1;
+
+        agent.action();
+
+        int newX = agent.getX() - 1;
+        int newY = agent.getY() - 1;
+
+        // Placer l'agent à sa nouvelle position si ce n'est pas un Port
+        if (!(m[newX][newY] instanceof Port)){
+            m[newX][newY] = agent;
         }
 
-            if (m[listeAgent.get(i).getX() - 1][listeAgent.get(i).getY() - 1] instanceof BateauMarchand){
-                if (((BateauMarchand)listeAgent.get(i)).getCoule()){
-                    m[listeAgent.get(i).getX() - 1][listeAgent.get(i).getY() - 1]=null;
-                }
-            }
+        // Effacer l'ancienne case SEULEMENT si l'agent a bougé,
+        // que l'ancienne case n'est pas un Port,
+        // ET que l'ancienne case contient encore CET agent (pas un autre qui s'y est déplacé)
+        if ((oldX != newX || oldY != newY)
+                && !(m[oldX][oldY] instanceof Port)
+                && m[oldX][oldY] == agent){
+            m[oldX][oldY] = null;
+        }
+
+        // Arrivée au port destination
+        if (agent instanceof BateauMarchand && m[newX][newY] == portArrive){
+            portArrive.arriveBateau((BateauMarchand) agent);
+            m[newX][newY] = portArrive;
+            listeAgent.remove(i);
+            i--;
+            continue; // ← important : ne pas tomber dans le bloc "coulé" après
+        }
+
+        // Bateau coulé : retirer de la matrice ET de la liste
+        if (agent instanceof BateauMarchand && ((BateauMarchand) agent).getCoule()){
+            m[newX][newY] = null;
+            listeAgent.remove(i);
+            i--;
         }
     }
+}
 
     private void updateRessource(){
         for (int i = 0; i < t.lesRessources().size(); i++){
