@@ -11,7 +11,7 @@ public class Port extends Agent{
         listeBM = new ArrayList<BateauMarchand>();
         nbBateau = 0;
         id = ++cpt;
-        if (LOG == true)
+        if (LOG)
             System.out.println(String.format("Creation de %s", this));
 
     }
@@ -37,13 +37,13 @@ public class Port extends Agent{
     public BateauMarchand departBateau(Port pDest){
         if (nbBateau <= 0)
         {
-            if (LOG == true);
+            if (LOG)
                 System.out.println("Il n'y as plus de bateau dans le port");
             return null;
         }
         BateauMarchand b = listeBM.remove(--nbBateau);
         b.setPDest(pDest);
-        if (LOG == true);
+        if (LOG);
             System.out.println("Depart de " + b);
         // b.deplaceVersPort();
         return b;

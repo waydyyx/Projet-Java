@@ -27,11 +27,11 @@ public class BateauMarchand extends Bateau{
     }
 
     public void deplaceVersPort(){
+        if (pDest == null)
+            return ;
         int DistX = x - pDest.getX();
         int DistY = y - pDest.getY();
 
-        if (pDest == null)
-            return ;
         if (DistY == 0){
             if (DistX > 0)
                 this.deplacer(this.x-1,this.y);
