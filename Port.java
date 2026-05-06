@@ -16,6 +16,10 @@ public class Port extends Agent{
 
     }
 
+    public Port(Port p){
+        this(p.nom, p.x, p.y, p.t, p.m);
+    }
+
     public Port(int x, int y, Terrain t, Agent[][] m){
         this("Port" + (cpt+1), x, y, t, m);
     }

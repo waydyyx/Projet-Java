@@ -54,7 +54,7 @@ public class Simulation{
         setCase(portDepart);
         setCase(portArrive);
         portDepart.arriveBateau(new BateauMarchand(xPortDepart, 1, t, m));
-        portDepart.arriveBateau(new BateauMarchand("caca", xPortDepart, 1, t, m));
+        portDepart.arriveBateau(new BateauMarchand("BM2", xPortDepart, 1, t, m));
         BateauPirate p = new BateauPirate(xPortArrive, 5, t,m);
         setCase(p);
         listeAgent.add(p);
@@ -142,7 +142,7 @@ public class Simulation{
         }
 
         // Effacer l'ancienne case SEULEMENT si l'agent a bougé,
-        // que l'ancienne case n'est pas un Port,
+        // que l'ancienne case n'est pas un Port,x
         // ET que l'ancienne case contient encore CET agent (pas un autre qui s'y est déplacé)
         if ((oldX != newX || oldY != newY)
                 && !(m[oldX][oldY] instanceof Port)
@@ -156,7 +156,7 @@ public class Simulation{
             m[newX][newY] = portArrive;
             listeAgent.remove(i);
             i--;
-            continue; // ← important : ne pas tomber dans le bloc "coulé" après
+            continue;
         }
 
         // Bateau coulé : retirer de la matrice ET de la liste
